@@ -1,0 +1,94 @@
+ RUN  e2e v0.23.1-nightly-20261108030229 <repo>
+      run 01a1bd1d-06fb-78a8-9653-18d43a60e12a · targets: android, ios
+ℹ 1 booted android device(s); driving 1: I2220
+ℹ booting <android-serial> (1 of 1)
+ ✓ mobile engine for target "android" prepared 3.25s
+   × |android| tests/repro.e2e.ts > a TextInput under the footer reads as hidden 8.05s
+     → expect.toBeHidden failed
+   × |android| tests/repro.e2e.ts > a tap on the covered Brand input focuses it 13.78s
+     → operation timed out: getByTestId("brand")
+   × |android| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer 21.67s
+     → expect.toBeFocused failed
+   × |android| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input 14.43s
+     → expect.toHaveValue failed
+   × |android| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input 16.96s
+     → expect.toHaveValue failed
+ ❯ |android| tests/repro.e2e.ts (5 tests | 5 failed) 74.89s
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |android| tests/repro.e2e.ts > a TextInput under the footer reads as hidden
+ASSERTION_FAILED: expect.toBeHidden failed
+locator: getByTestId("brand")
+expected: hidden or absent
+observed: visible (match count 1)
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/nightly/results/repro-a-textinput-under-the-footer-bc029b8a3f61abf2/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > a tap on the covered Brand input focuses it
+ACTION_FAILED: operation timed out: getByTestId("brand")
+ ❯ trace .e2e/nightly/results/repro-a-tap-on-the-covered-brand-input-a2f4ae2921f4ce8e/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+ASSERTION_FAILED: expect.toBeFocused failed
+locator: getByTestId("brand")
+expected: focused
+observed: default states (match count 1)
+ ❯ tests/repro.e2e.ts:42:3
+     40|   //    Product name keeps focus.
+     41|   await brand.tap();
+     42|   await expect(brand).toBeFocused();
+       |   ^
+     43| });
+     44|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/nightly/results/repro-the-reported-flow-95c2906616fa7926/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "WidgetAcme" (match count 1)
+ ❯ tests/repro.e2e.ts:54:3
+     52|   // 4. Typing should go to Brand, and Product name should stay "Widg…
+     53|   await brand.pressSequentially('Acme');
+     54|   await expect(product).toHaveValue('Widget');
+       |   ^
+     55|   await expect(brand).toHaveValue('Acme');
+     56| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/nightly/results/repro-the-reported-flow-typed-b71b1f6203a9059a/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "Acme" (match count 1)
+ ❯ tests/repro.e2e.ts:67:3
+     65|   // fill reports success, but it replaces Product name's text instea…
+     66|   await brand.fill('Acme');
+     67|   await expect(product).toHaveValue('Widget');
+       |   ^
+     68|   await expect(brand).toHaveValue('Acme');
+     69| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/nightly/results/repro-the-reported-flow-filled-fill-6410e19edc2901ce/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+ Test Files  1 failed | 0 passed (1)
+      Tests  5 failed | 0 passed (5)
+   Start at  03:12:42
+   Duration  75.14s (1m 15s)
+     Traces  .e2e/nightly/results/ (5 pages, trace.md in each test's directory)
+     Failed  × |android| tests/repro.e2e.ts:14 > a TextInput under the footer reads as hidden
+               ASSERTION_FAILED: expect.toBeHidden failed
+               trace .e2e/nightly/results/repro-a-textinput-under-the-footer-bc029b8a3f61abf2/trace.md
+             × |android| tests/repro.e2e.ts:20 > a tap on the covered Brand input focuses it
+               ACTION_FAILED: operation timed out: getByTestId("brand")
+               trace .e2e/nightly/results/repro-a-tap-on-the-covered-brand-input-a2f4ae2921f4ce8e/trace.md
+             × |android| tests/repro.e2e.ts:42 > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+               ASSERTION_FAILED: expect.toBeFocused failed
+               trace .e2e/nightly/results/repro-the-reported-flow-95c2906616fa7926/trace.md
+             × |android| tests/repro.e2e.ts:54 > the reported flow, typed: pressSequentially into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/nightly/results/repro-the-reported-flow-typed-b71b1f6203a9059a/trace.md
+             × |android| tests/repro.e2e.ts:67 > the reported flow, filled: fill into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/nightly/results/repro-the-reported-flow-filled-fill-6410e19edc2901ce/trace.md

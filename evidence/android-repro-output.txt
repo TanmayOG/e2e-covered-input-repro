@@ -1,0 +1,112 @@
+ RUN  e2e v0.23.0 <repo>
+      run 01a1bd16-56f3-7fe5-92fb-ce4a5c3c0b51 · targets: android, ios
+ℹ 1 booted android device(s); driving 1: I2220
+ℹ booting <android-serial> (1 of 1)
+ ✓ mobile engine for target "android" prepared 2.00s
+   × |android| tests/repro.e2e.ts > a TextInput under the footer reads as hidden 9.06s
+     → expect.toBeHidden failed
+   × |android| tests/repro.e2e.ts > a tap on the covered Brand input focuses it 9.72s
+     → expect.toBeFocused failed
+   × |android| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer 14.02s
+     → expect.toBeFocused failed
+   × |android| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input 14.15s
+     → expect.toHaveValue failed
+   × |android| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input 16.22s
+     → expect.toHaveValue failed
+ ❯ |android| tests/repro.e2e.ts (5 tests | 5 failed) 63.16s
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |android| tests/repro.e2e.ts > a TextInput under the footer reads as hidden
+ASSERTION_FAILED: expect.toBeHidden failed
+locator: getByTestId("brand")
+expected: hidden or absent
+observed: visible (match count 1)
+ ❯ tests/repro.e2e.ts:17:3
+     15|   await expect(screen.getByTestId('footer-next')).toBeVisible();
+     16|   // A person can neither see nor tap Brand: the footer is drawn over…
+     17|   await expect(screen.getByTestId('brand')).toBeHidden();
+       |   ^
+     18| });
+     19|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/repro/results/repro-a-textinput-under-the-footer-bc029b8a3f61abf2/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > a tap on the covered Brand input focuses it
+ASSERTION_FAILED: expect.toBeFocused failed
+locator: getByTestId("brand")
+expected: focused
+observed: default states (match count 1)
+ ❯ tests/repro.e2e.ts:24:3
+     22|   await brand.tap();
+     23|   // Fails: the tap lands on the footer ("Footer taps: 1"), not on Br…
+     24|   await expect(brand).toBeFocused();
+       |   ^
+     25| });
+     26|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/repro/results/repro-a-tap-on-the-covered-brand-input-a2f4ae2921f4ce8e/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+ASSERTION_FAILED: expect.toBeFocused failed
+locator: getByTestId("brand")
+expected: focused
+observed: default states (match count 1)
+ ❯ tests/repro.e2e.ts:42:3
+     40|   //    Product name keeps focus.
+     41|   await brand.tap();
+     42|   await expect(brand).toBeFocused();
+       |   ^
+     43| });
+     44|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/repro/results/repro-the-reported-flow-95c2906616fa7926/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "WidgetAcme" (match count 1)
+ ❯ tests/repro.e2e.ts:54:3
+     52|   // 4. Typing should go to Brand, and Product name should stay "Widg…
+     53|   await brand.pressSequentially('Acme');
+     54|   await expect(product).toHaveValue('Widget');
+       |   ^
+     55|   await expect(brand).toHaveValue('Acme');
+     56| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/repro/results/repro-the-reported-flow-typed-b71b1f6203a9059a/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "Acme" (match count 1)
+ ❯ tests/repro.e2e.ts:67:3
+     65|   // fill reports success, but it replaces Product name's text instea…
+     66|   await brand.fill('Acme');
+     67|   await expect(product).toHaveValue('Widget');
+       |   ^
+     68|   await expect(brand).toHaveValue('Acme');
+     69| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/repro/results/repro-the-reported-flow-filled-fill-6410e19edc2901ce/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+ Test Files  1 failed | 0 passed (1)
+      Tests  5 failed | 0 passed (5)
+   Start at  03:05:22
+   Duration  63.41s (1m 3s)
+     Traces  .e2e/repro/results/ (5 pages, trace.md in each test's directory)
+     Failed  × |android| tests/repro.e2e.ts:17 > a TextInput under the footer reads as hidden
+               ASSERTION_FAILED: expect.toBeHidden failed
+               trace .e2e/repro/results/repro-a-textinput-under-the-footer-bc029b8a3f61abf2/trace.md
+             × |android| tests/repro.e2e.ts:24 > a tap on the covered Brand input focuses it
+               ASSERTION_FAILED: expect.toBeFocused failed
+               trace .e2e/repro/results/repro-a-tap-on-the-covered-brand-input-a2f4ae2921f4ce8e/trace.md
+             × |android| tests/repro.e2e.ts:42 > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+               ASSERTION_FAILED: expect.toBeFocused failed
+               trace .e2e/repro/results/repro-the-reported-flow-95c2906616fa7926/trace.md
+             × |android| tests/repro.e2e.ts:54 > the reported flow, typed: pressSequentially into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/repro/results/repro-the-reported-flow-typed-b71b1f6203a9059a/trace.md
+             × |android| tests/repro.e2e.ts:67 > the reported flow, filled: fill into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/repro/results/repro-the-reported-flow-filled-fill-6410e19edc2901ce/trace.md

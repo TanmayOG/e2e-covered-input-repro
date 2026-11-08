@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Covered Input Repro",
+    "slug": "e2e-covered-input-repro",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "ios": {
+      "bundleIdentifier": "dev.e2erepro.coveredinput",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "dev.e2erepro.coveredinput",
+      "softwareKeyboardLayoutMode": "resize"
+    }
+  }
+}

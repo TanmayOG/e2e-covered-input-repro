@@ -1,0 +1,12 @@
+ RUN  e2e v0.23.0 <repo>
+      run 01a1bd17-889b-79fd-b9dc-a8ea8614fea6 · targets: android, ios
+ℹ 1 booted android device(s); driving 1: I2220
+ℹ booting <android-serial> (1 of 1)
+ ✓ mobile engine for target "android" prepared 1.96s
+   ✓ |android| tests/control.e2e.ts > with the footer hidden, the same steps fill Brand 13.45s
+   ✓ |android| tests/control.e2e.ts > an uncovered input above the footer fills normally 5.88s
+ ✓ |android| tests/control.e2e.ts (2 tests) 19.33s
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  03:06:40
+   Duration  19.56s

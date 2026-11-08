@@ -1,0 +1,26 @@
+## a TextInput under the footer reads as hidden -> failed
+    app.open  passed 1764ms [] []
+    expect.toBeVisible getByTestId("footer-next") passed 384ms ['expect'] []
+    expect.toBeHidden getByTestId("brand") failed 5153ms ['visible (1 match) x27'] []
+## a tap on the covered Brand input focuses it -> failed
+    app.open  passed 2894ms [] []
+    locator.tap getByTestId("brand") passed 722ms ['tap textbox "Brand"'] []
+    expect.toBeFocused getByTestId("brand") failed 5156ms ['default states (1 match) x5'] ['added text "Footer taps: 1" testid="status-footer-taps"', 'removed text "Footer taps: 0" testid="status-footer-taps"']
+## the reported flow: scrollUntilVisible(Brand) brings it out from under the footer -> failed
+    app.open  passed 1495ms [] []
+    locator.fill getByTestId("product-name") passed 3332ms ['fill textbox "Product name"'] []
+    screen.scrollUntilVisible getByTestId("brand") passed 740ms [] []
+    locator.tap getByTestId("brand") passed 991ms ['tap textbox "Brand"'] []
+    expect.toBeFocused getByTestId("brand") failed 5678ms ['default states (1 match) x7'] ['added text "Footer taps: 1" testid="status-footer-taps"', 'removed text "Footer taps: 0" testid="status-footer-taps"']
+## the reported flow, typed: pressSequentially into the covered Brand input -> failed
+    app.open  passed 1479ms [] []
+    locator.fill getByTestId("product-name") passed 3136ms ['fill textbox "Product name"'] []
+    screen.scrollUntilVisible getByTestId("brand") passed 719ms [] []
+    locator.pressSequentially getByTestId("brand") passed 1472ms ['focus textbox "Brand"'] []
+    expect.toHaveValue getByTestId("product-name") failed 5708ms ['value "WidgetAcme" (1 match) x7'] ['added text "Footer taps: 1" testid="status-footer-taps"', 'added text "Product name = \\"WidgetAcme\\" · Brand = \\"\\"" testid="status-values"', 'added textbox "WidgetAcme" testid="product-name" value="WidgetAcme"', 'removed text "Footer taps: 0" testid="status-footer-taps"', 'removed text "Product name = \\"Widget\\" · Brand = \\"\\"" testid="status-values"', 'removed textbox "Widget" testid="product-name" value="Widget"']
+## the reported flow, filled: fill into the covered Brand input -> failed
+    app.open  passed 1403ms [] []
+    locator.fill getByTestId("product-name") passed 3140ms ['fill textbox "Product name"'] []
+    screen.scrollUntilVisible getByTestId("brand") passed 692ms [] []
+    locator.fill getByTestId("brand") passed 4157ms ['fill textbox "Brand"'] []
+    expect.toHaveValue getByTestId("product-name") failed 5646ms ['value "Acme" (1 match) x7'] ['added text "Footer taps: 1" testid="status-footer-taps"', 'added text "Product name = \\"Acme\\" · Brand = \\"\\"" testid="status-values"', 'added textbox "Acme" testid="product-name" value="Acme"']

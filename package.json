@@ -1,0 +1,28 @@
+{
+  "name": "e2e-covered-input-repro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Reproduction for tester-army/e2e#1324: a TextInput covered by a footer reads as visible",
+  "main": "index.ts",
+  "scripts": {
+    "android": "expo run:android --variant release",
+    "ios": "expo run:ios --configuration Release",
+    "repro:android": "e2e run --target android tests/repro.e2e.ts",
+    "repro:ios": "e2e run --target ios tests/repro.e2e.ts",
+    "control:android": "e2e run --target android tests/control.e2e.ts",
+    "control:ios": "e2e run --target ios tests/control.e2e.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "expo": "57.0.32",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "5.7.0"
+  },
+  "devDependencies": {
+    "@e2e-dev/mobile": "0.12.6",
+    "@types/react": "19.2.18",
+    "e2e": "0.23.0",
+    "typescript": "5.9.3"
+  }
+}
