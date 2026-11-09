@@ -11,6 +11,9 @@
     "android": {
       "package": "dev.e2erepro.coveredinput",
       "softwareKeyboardLayoutMode": "resize"
-    }
+    },
+    "plugins": [
+      "./plugins/with-scene-lifecycle.js"
+    ]
   }
 }

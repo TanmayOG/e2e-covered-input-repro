@@ -1,0 +1,135 @@
+ RUN  e2e v0.23.0 <repo>
+      run 01a1bfbb-a641-767e-8bf1-68f7d85e8b0e · targets: android, ios
+ℹ 1 booted android device(s); driving 1: I2220
+ℹ booting <android-serial> (1 of 1)
+ ✓ mobile engine for target "android" prepared 2.37s
+   ✓ |android| tests/control.e2e.ts > with the footer hidden, the same steps fill Brand 12.52s
+   ✓ |android| tests/control.e2e.ts > an uncovered input above the footer fills normally 6.62s
+ ✓ |android| tests/control.e2e.ts (2 tests) 19.14s
+   × |android| tests/repro.e2e.ts > a TextInput under the footer reads as hidden 9.28s
+     → expect.toBeHidden failed
+   × |android| tests/repro.e2e.ts > a tap on the covered Brand input never presses the footer 9.41s
+     → expect.toHaveText failed
+   × |android| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer 14.78s
+     → expect.toBeFocused failed
+   × |android| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input 14.85s
+     → expect.toHaveValue failed
+   × |android| tests/repro.e2e.ts > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand 17.26s
+     → expect.toHaveValue failed
+   × |android| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input 17.30s
+     → expect.toHaveValue failed
+ ❯ |android| tests/repro.e2e.ts (6 tests | 6 failed) 82.88s
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |android| tests/repro.e2e.ts > a TextInput under the footer reads as hidden
+ASSERTION_FAILED: expect.toBeHidden failed
+locator: getByTestId("brand")
+expected: hidden or absent
+observed: visible (match count 1)
+ ❯ tests/repro.e2e.ts:17:3
+     15|   await expect(screen.getByTestId('footer-next')).toBeVisible();
+     16|   // A person can neither see nor tap Brand: the footer is drawn over…
+     17|   await expect(screen.getByTestId('brand')).toBeHidden();
+       |   ^
+     18| });
+     19|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-android/results/repro-a-textinput-under-the-footer-bc029b8a3f61abf2/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+ FAIL  |android| tests/repro.e2e.ts > a tap on the covered Brand input never presses the footer
+ASSERTION_FAILED: expect.toHaveText failed
+locator: getByTestId("status-footer-taps")
+expected: text "Footer taps: 0"
+observed: text "Footer taps: 1" (match count 1)
+ ❯ tests/repro.e2e.ts:25:3
+     23|   // the footer, so the status line reads "Footer taps: 1".
+     24|   await screen.getByTestId('brand').tap().catch(() => undefined);
+     25|   await expect(screen.getByTestId('status-footer-taps')).toHaveText('…
+       |   ^
+     26| });
+     27|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-android/results/repro-a-tap-on-the-covered-brand-input-8c6eafaa16262383/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+ASSERTION_FAILED: expect.toBeFocused failed
+locator: getByTestId("brand")
+expected: focused
+observed: default states (match count 1)
+ ❯ tests/repro.e2e.ts:43:3
+     41|   //    Product name keeps focus.
+     42|   await brand.tap();
+     43|   await expect(brand).toBeFocused();
+       |   ^
+     44| });
+     45|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-android/results/repro-the-reported-flow-95c2906616fa7926/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "WidgetAcme" (match count 1)
+ ❯ tests/repro.e2e.ts:55:3
+     53|   // 4. Typing should go to Brand, and Product name should stay "Widg…
+     54|   await brand.pressSequentially('Acme');
+     55|   await expect(product).toHaveValue('Widget');
+       |   ^
+     56|   await expect(brand).toHaveValue('Acme');
+     57| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-android/results/repro-the-reported-flow-typed-b71b1f6203a9059a/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "Acme" (match count 1)
+ ❯ tests/repro.e2e.ts:69:3
+     67|   await brand.fill('Acme');
+     68|
+     69|   await expect(product).toHaveValue('Widget');
+       |   ^
+     70|   await expect(brand).toHaveValue('Acme');
+     71| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-android/results/repro-the-reported-flow-scrolling-the-d056c4faa7aa2198/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+ FAIL  |android| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "Acme" (match count 1)
+ ❯ tests/repro.e2e.ts:82:3
+     80|   // fill reports success, but it replaces Product name's text instea…
+     81|   await brand.fill('Acme');
+     82|   await expect(product).toHaveValue('Widget');
+       |   ^
+     83|   await expect(brand).toHaveValue('Acme');
+     84| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-android/results/repro-the-reported-flow-filled-fill-6410e19edc2901ce/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+ Test Files  1 failed | 1 passed (2)
+      Tests  6 failed | 2 passed (8)
+   Start at  15:25:11
+   Duration  102.28s (1m 42s)
+     Traces  .e2e/before-android/results/ (6 pages, trace.md in each test's directory)
+     Failed  × |android| tests/repro.e2e.ts:17 > a TextInput under the footer reads as hidden
+               ASSERTION_FAILED: expect.toBeHidden failed
+               trace .e2e/before-android/results/repro-a-textinput-under-the-footer-bc029b8a3f61abf2/trace.md
+             × |android| tests/repro.e2e.ts:25 > a tap on the covered Brand input never presses the footer
+               ASSERTION_FAILED: expect.toHaveText failed
+               trace .e2e/before-android/results/repro-a-tap-on-the-covered-brand-input-8c6eafaa16262383/trace.md
+             × |android| tests/repro.e2e.ts:43 > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+               ASSERTION_FAILED: expect.toBeFocused failed
+               trace .e2e/before-android/results/repro-the-reported-flow-95c2906616fa7926/trace.md
+             × |android| tests/repro.e2e.ts:55 > the reported flow, typed: pressSequentially into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/before-android/results/repro-the-reported-flow-typed-b71b1f6203a9059a/trace.md
+             × |android| tests/repro.e2e.ts:69 > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/before-android/results/repro-the-reported-flow-scrolling-the-d056c4faa7aa2198/trace.md
+             × |android| tests/repro.e2e.ts:82 > the reported flow, filled: fill into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/before-android/results/repro-the-reported-flow-filled-fill-6410e19edc2901ce/trace.md

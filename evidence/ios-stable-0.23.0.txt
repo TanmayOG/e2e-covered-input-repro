@@ -1,0 +1,114 @@
+ RUN  e2e v0.23.0 <repo>
+      run 01a1bfbb-a641-7329-9035-3d68f0cbe47f · targets: android, ios
+ℹ booting <simulator-udid> (1 of 1)
+ ✓ mobile engine for target "ios" prepared 1.22s
+   ✓ |ios| tests/control.e2e.ts > with the footer hidden, the same steps fill Brand 8.93s
+   ✓ |ios| tests/control.e2e.ts > an uncovered input above the footer fills normally 4.49s
+ ✓ |ios| tests/control.e2e.ts (2 tests) 13.41s
+   × |ios| tests/repro.e2e.ts > a TextInput under the footer reads as hidden 8.86s
+     → expect.toBeHidden failed
+   × |ios| tests/repro.e2e.ts > a tap on the covered Brand input never presses the footer 9.08s
+     → expect.toHaveText failed
+   × |ios| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer 11.12s
+     → expect.toBeFocused failed
+   × |ios| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input 11.66s
+     → expect.toHaveValue failed
+   × |ios| tests/repro.e2e.ts > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand 13.09s
+     → perform fill failed: Runner command "type" lost its transport response a…
+   × |ios| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input 21.65s
+     → perform fill failed: Runner command "type" lost its transport response a…
+ ❯ |ios| tests/repro.e2e.ts (6 tests | 6 failed) 75.45s
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+ FAIL  |ios| tests/repro.e2e.ts > a TextInput under the footer reads as hidden
+ASSERTION_FAILED: expect.toBeHidden failed
+locator: getByTestId("brand")
+expected: hidden or absent
+observed: visible (match count 1)
+ ❯ tests/repro.e2e.ts:17:3
+     15|   await expect(screen.getByTestId('footer-next')).toBeVisible();
+     16|   // A person can neither see nor tap Brand: the footer is drawn over…
+     17|   await expect(screen.getByTestId('brand')).toBeHidden();
+       |   ^
+     18| });
+     19|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-ios/results/repro-a-textinput-under-the-footer-5995caa787638893/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+ FAIL  |ios| tests/repro.e2e.ts > a tap on the covered Brand input never presses the footer
+ASSERTION_FAILED: expect.toHaveText failed
+locator: getByTestId("status-footer-taps")
+expected: text "Footer taps: 0"
+observed: text "Footer taps: 1" (match count 1)
+ ❯ tests/repro.e2e.ts:25:3
+     23|   // the footer, so the status line reads "Footer taps: 1".
+     24|   await screen.getByTestId('brand').tap().catch(() => undefined);
+     25|   await expect(screen.getByTestId('status-footer-taps')).toHaveText('…
+       |   ^
+     26| });
+     27|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-ios/results/repro-a-tap-on-the-covered-brand-input-df16e791ecb62c81/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+ FAIL  |ios| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+ASSERTION_FAILED: expect.toBeFocused failed
+locator: getByTestId("brand")
+expected: focused
+observed: default states (match count 1)
+ ❯ tests/repro.e2e.ts:43:3
+     41|   //    Product name keeps focus.
+     42|   await brand.tap();
+     43|   await expect(brand).toBeFocused();
+       |   ^
+     44| });
+     45|
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-ios/results/repro-the-reported-flow-6a65fc971a37dde0/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+ FAIL  |ios| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input
+ASSERTION_FAILED: expect.toHaveValue failed
+locator: getByTestId("product-name")
+expected: value "Widget"
+observed: value "WidgetAcme" (match count 1)
+ ❯ tests/repro.e2e.ts:55:3
+     53|   // 4. Typing should go to Brand, and Product name should stay "Widg…
+     54|   await brand.pressSequentially('Acme');
+     55|   await expect(product).toHaveValue('Widget');
+       |   ^
+     56|   await expect(brand).toHaveValue('Acme');
+     57| });
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-ios/results/repro-the-reported-flow-typed-6d7db53d0a19914b/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+ FAIL  |ios| tests/repro.e2e.ts > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand
+ENGINE_FAILURE: perform fill failed: Runner command "type" lost its transport response and the status probe failed, so agent-device invalidated the runner session instead of replaying the command. Hint: The runner did not confirm that "type" reached a safe terminal state, so agent-device kept the conservative invalidation path. Run snapshot -i before retrying if the UI may have changed.
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-ios/results/repro-the-reported-flow-scrolling-the-9cfe41db455b1268/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+ FAIL  |ios| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input
+ENGINE_FAILURE: perform fill failed: Runner command "type" lost its transport response and the status probe failed, so agent-device invalidated the runner session instead of replaying the command. Hint: The runner did not confirm that "type" reached a safe terminal state, so agent-device kept the conservative invalidation path. Run snapshot -i before retrying if the UI may have changed.
+ ❯ at dev.e2erepro.coveredinput
+ ❯ trace .e2e/before-ios/results/repro-the-reported-flow-filled-fill-9c420110d205e259/trace.md
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+ Test Files  1 failed | 1 passed (2)
+      Tests  6 failed | 2 passed (8)
+   Start at  15:25:10
+   Duration  89.20s (1m 29s)
+     Traces  .e2e/before-ios/results/ (6 pages, trace.md in each test's directory)
+     Failed  × |ios| tests/repro.e2e.ts:17 > a TextInput under the footer reads as hidden
+               ASSERTION_FAILED: expect.toBeHidden failed
+               trace .e2e/before-ios/results/repro-a-textinput-under-the-footer-5995caa787638893/trace.md
+             × |ios| tests/repro.e2e.ts:25 > a tap on the covered Brand input never presses the footer
+               ASSERTION_FAILED: expect.toHaveText failed
+               trace .e2e/before-ios/results/repro-a-tap-on-the-covered-brand-input-df16e791ecb62c81/trace.md
+             × |ios| tests/repro.e2e.ts:43 > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer
+               ASSERTION_FAILED: expect.toBeFocused failed
+               trace .e2e/before-ios/results/repro-the-reported-flow-6a65fc971a37dde0/trace.md
+             × |ios| tests/repro.e2e.ts:55 > the reported flow, typed: pressSequentially into the covered Brand input
+               ASSERTION_FAILED: expect.toHaveValue failed
+               trace .e2e/before-ios/results/repro-the-reported-flow-typed-6d7db53d0a19914b/trace.md
+             × |ios| tests/repro.e2e.ts:59 > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand
+               ENGINE_FAILURE: perform fill failed: Runner command "type" lost its transport response and the status probe failed, so agent-device invalidated the runner session instead of replaying the command. Hint: The runner did not confirm that "type" reached a safe terminal state, so agent-device kept the conservative invalidation path. Run snapshot -i before retrying if the UI may have changed.
+               trace .e2e/before-ios/results/repro-the-reported-flow-scrolling-the-9cfe41db455b1268/trace.md
+             × |ios| tests/repro.e2e.ts:73 > the reported flow, filled: fill into the covered Brand input
+               ENGINE_FAILURE: perform fill failed: Runner command "type" lost its transport response and the status probe failed, so agent-device invalidated the runner session instead of replaying the command. Hint: The runner did not confirm that "type" reached a safe terminal state, so agent-device kept the conservative invalidation path. Run snapshot -i before retrying if the UI may have changed.
+               trace .e2e/before-ios/results/repro-the-reported-flow-filled-fill-9c420110d205e259/trace.md

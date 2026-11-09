@@ -1,0 +1,18 @@
+ RUN  e2e v0.23.0 <repo>
+      run 01a1bfbd-9153-7fce-ab39-083d3b3a34c9 · targets: android, ios
+ℹ booting <simulator-udid> (1 of 1)
+ ✓ mobile engine for target "ios" prepared 1.10s
+   ✓ |ios| tests/control.e2e.ts > with the footer hidden, the same steps fill Brand 7.79s
+   ✓ |ios| tests/control.e2e.ts > an uncovered input above the footer fills normally 4.30s
+ ✓ |ios| tests/control.e2e.ts (2 tests) 12.09s
+   ✓ |ios| tests/repro.e2e.ts > a TextInput under the footer reads as hidden 2.63s
+   ✓ |ios| tests/repro.e2e.ts > a tap on the covered Brand input never presses the footer 2.65s
+   ✓ |ios| tests/repro.e2e.ts > the reported flow: scrollUntilVisible(Brand) brings it out from under the footer 5.88s
+   ✓ |ios| tests/repro.e2e.ts > the reported flow, typed: pressSequentially into the covered Brand input 6.92s
+   ✓ |ios| tests/repro.e2e.ts > the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand 7.69s
+   ✓ |ios| tests/repro.e2e.ts > the reported flow, filled: fill into the covered Brand input 7.06s
+ ✓ |ios| tests/repro.e2e.ts (6 tests) 32.83s
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  15:27:15
+   Duration  45.13s

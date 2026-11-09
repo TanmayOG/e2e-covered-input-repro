@@ -6,7 +6,7 @@ Opening the keyboard raises a Back/Next footer over the Brand input. A person ca
 
 - `expect(brand).toBeHidden()` fails: "observed: visible".
 - `screen.scrollUntilVisible(brand)` returns without scrolling.
-- `brand.tap()`, `brand.pressSequentially()` and `brand.fill()` all report success, but the touch lands on the footer. Product name keeps focus, so the text goes into Product name.
+- `brand.tap()`, `brand.pressSequentially()` and `brand.fill()` report success, but the touch lands on the footer. Product name keeps focus, so the text goes into Product name.
 
 The app is one Expo screen. The layout pins Brand under the footer on any screen size, with the keyboard open or closed, so the failure happens on every run. In a real app the footer only lands on the next input for some screen and keyboard sizes, which is why it shows up as a flake.
 
@@ -24,7 +24,7 @@ Android (a phone or emulator on `adb`):
 
 ```sh
 npm run android          # release build, installs dev.e2erepro.coveredinput
-npm run repro:android    # exits 1: all 5 repro tests fail
+npm run repro:android    # exits 1 on e2e 0.23.0: all 6 repro tests fail
 npm run control:android  # exits 0: both controls pass
 ```
 
@@ -36,40 +36,44 @@ npm run repro:ios
 npm run control:ios
 ```
 
+- iOS 27 stops an app at launch unless it adopts the UIScene life cycle. `plugins/with-scene-lifecycle.js` wires in Expo's `ExpoAppSceneDelegate` during prebuild.
+- Turn off the simulator's hardware keyboard (`defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool false`, then reboot the simulator), so the on-screen keyboard opens with the first field the way it does on a phone. With the Mac's keyboard connected, the on-screen keyboard only opens on a tap, the form shrinks under agent-device's fill, and Brand moves before it types.
+
 With more than one device connected, set `ANDROID_DEVICE` to the phone's model name, or `IOS_SIMULATOR_UDID`.
 
 ## Results
 
-Android 16 (API 36), vivo I2220 phone, Gboard. `e2e` 0.23.0, `@e2e-dev/mobile` 0.12.6, `agent-device` 0.21.36. Expo SDK 57, React Native 0.86.3. Same result on every run.
+Android 16 phone (vivo I2220, Gboard) and iOS 27.2 simulator (iPhone 18 Pro). Expo SDK 57, React Native 0.86.3, `agent-device` 0.21.36.
 
-`tests/repro.e2e.ts`: all 5 fail.
+| | e2e 0.23.0 | with the fix |
+|---|---|---|
+| Android, `tests/repro.e2e.ts` | 0/6 | 6/6 |
+| iOS, `tests/repro.e2e.ts` | 0/6 | 6/6 |
+| Android and iOS, `tests/control.e2e.ts` | 2/2 | 2/2 |
+
+On e2e 0.23.0 (the 0.23.1 nightly behaves the same):
 
 | Test | Expected | Observed |
 |---|---|---|
 | a TextInput under the footer reads as hidden | hidden | `visible (match count 1)` |
-| a tap on the covered Brand input focuses it | Brand focused | not focused. The tap passed, and the screen shows `Footer taps: 1` |
-| reported flow: fill Product name, `scrollUntilVisible(Brand)`, tap Brand | Brand focused | `scrollUntilVisible` returned in ~0.7s with no swipe. The tap hit the footer, and Product name kept focus |
-| reported flow, typed: `pressSequentially('Acme')` | Product name `Widget`, Brand `Acme` | Product name **`WidgetAcme`**, Brand empty |
-| reported flow, filled: `fill('Acme')` | Product name `Widget`, Brand `Acme` | Product name **`Acme`** (overwritten), Brand empty |
+| a tap on the covered Brand input never presses the footer | `Footer taps: 0` | `Footer taps: 1` |
+| reported flow: fill Product name, `scrollUntilVisible(Brand)`, tap Brand | Brand focused | `scrollUntilVisible` returns at once, the tap hits the footer, Product name keeps focus |
+| reported flow, typed: `pressSequentially('Acme')` | Product name `Widget`, Brand `Acme` | Product name **`WidgetAcme`** (iOS: `Widget Acme`), Brand empty |
+| reported flow, scrolling the form | Brand `Acme` | the scroll returns at once and the fill misses Brand |
+| reported flow, filled: `fill('Acme')` | Product name `Widget`, Brand `Acme` | Android: Product name overwritten with **`Acme`**, reported as success |
 
-In each case the e2e step itself reports success: `tap textbox "Brand"`, `focus textbox "Brand"`, `fill textbox "Brand"`. Only the assertion after it fails.
-
-The nightly gives the same result: `e2e` 0.23.1-nightly-20261108030229 and `@e2e-dev/mobile` 0.12.7-nightly-20261108030229 (all 5 fail, both controls pass; `evidence/android-repro-nightly-output.txt`). The only mobile change on `main` since that nightly is a config check (#1619).
-
-`tests/control.e2e.ts`: both pass. With the footer hidden, the same steps fill Brand, so the footer drawn over Brand is the only difference.
+`tests/control.e2e.ts` runs the same steps with the footer hidden, and passes, so the footer drawn over Brand is the only difference.
 
 Evidence in `evidence/`:
 
-- `android-repro-output.txt`, `android-control-output.txt`: the CLI output.
-- `android-repro-steps.txt`: each step, with the screen changes e2e recorded after it.
+- `android-stable-0.23.0.txt`, `ios-stable-0.23.0.txt`, `android-with-fix.txt`, `ios-with-fix.txt`: the CLI output of both suites, before and after the fix.
+- `android-repro-nightly-*.txt`: an earlier run on the 0.23.1 nightly.
 - `android-keyboard-open.png`: the layout with the keyboard up. Android's UI tree puts Brand at `[48,1396][1212,1540]`, inside the footer at `[0,1348][1260,1684]`.
-- `android-typed-widgetacme.png`, `android-filled-overwrote-product.png`: the end state of the typed and filled tests.
-- `android-repro-typed-and-filled.mp4`: screen recording of those two tests.
+- `android-typed-widgetacme.png`, `android-filled-overwrote-product.png`, `android-repro-typed-and-filled.mp4`: the typed and filled tests on 0.23.0.
+- `ios-launch.png`: the screen on the iOS simulator.
 
 ## Where it comes from
 
-Read in the source, not confirmed by changing it:
-
-- `@e2e-dev/mobile` marks a node hidden only when the device reports `visibleToUser === false` (`packages/mobile/src/nodes.ts`). `isNodeVisible` checks only that flag (`packages/e2e/src/locator/engine.ts`).
-- agent-device works out visibility from the viewport: whether the node's center is on screen, or inside its scroll container (`packages/contracts/src/snapshot-visibility.ts`). It does not check whether a sibling view drawn on top covers the node.
-- So a node under an overlay reads as visible. `scrollUntilVisible` stops at once, and the tap goes to the node's center, where the footer is.
+- `@e2e-dev/mobile` marks a node hidden only when the device reports `visibleToUser === false`. agent-device works out visibility from the viewport, not from views drawn on top.
+- agent-device has its own occlusion pass (`interactionBlocked: 'covered'`), but it counts only known floating chrome (tab bars, toolbars, sheets, dialogs), so an app-drawn footer isn't flagged.
+- With the keyboard up, agent-device's screen swipe starts in the middle of the space above the keyboard, which is where the raised footer is, so the swipe moves nothing.

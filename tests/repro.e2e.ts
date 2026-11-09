@@ -17,11 +17,12 @@ test('a TextInput under the footer reads as hidden', async ({ screen }) => {
   await expect(screen.getByTestId('brand')).toBeHidden();
 });
 
-test('a tap on the covered Brand input focuses it', async ({ screen }) => {
-  const brand = screen.getByTestId('brand');
-  await brand.tap();
-  // Fails: the tap lands on the footer ("Footer taps: 1"), not on Brand.
-  await expect(brand).toBeFocused();
+test('a tap on the covered Brand input never presses the footer', async ({ screen }) => {
+  // A person can't tap Brand here, so the tap may reach Brand or be refused,
+  // but it must not press Next. Fails: the tap reports success and lands on
+  // the footer, so the status line reads "Footer taps: 1".
+  await screen.getByTestId('brand').tap().catch(() => undefined);
+  await expect(screen.getByTestId('status-footer-taps')).toHaveText('Footer taps: 0');
 });
 
 test('the reported flow: scrollUntilVisible(Brand) brings it out from under the footer', async ({ screen }) => {
@@ -51,6 +52,20 @@ test('the reported flow, typed: pressSequentially into the covered Brand input',
 
   // 4. Typing should go to Brand, and Product name should stay "Widget".
   await brand.pressSequentially('Acme');
+  await expect(product).toHaveValue('Widget');
+  await expect(brand).toHaveValue('Acme');
+});
+
+test('the reported flow, scrolling the form: scrollUntilVisible inside the form, then fill Brand', async ({ screen }) => {
+  const product = screen.getByTestId('product-name');
+  const brand = screen.getByTestId('brand');
+
+  await product.fill('Widget');
+  // Swipes inside the form itself rather than the whole screen, so the drag
+  // starts on the form and not on the raised footer.
+  await screen.getByTestId('form').scrollUntilVisible(brand);
+  await brand.fill('Acme');
+
   await expect(product).toHaveValue('Widget');
   await expect(brand).toHaveValue('Acme');
 });
